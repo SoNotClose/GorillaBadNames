@@ -7,7 +7,7 @@ using Photon.Pun;
 /// GORILLA BAD NAMES
 /// 
 /// Github for cloudscript: https://github.com/SoNotClose/GorillaBadNames
-/// .gg/Zen Unity
+/// .gg/zenunity for more
 /// 
 /// </summary>
 public class GorillaPlayfabUpdater : MonoBehaviour
