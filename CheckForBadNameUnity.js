@@ -17,7 +17,7 @@ handlers.CheckForBadName = function(args) {
             Bans: [{
                 PlayFabId: currentPlayerId,
                 DurationInHours: 24,
-                Reason: `USE YOUR HEAD NEXT TIME, BAD NAME: ${name}\nID: ${currentPlayerId}`
+                Reason: `RULE BREAKING NAME: ${name}\nID: ${currentPlayerId}`
             }]
         });
         return { result: 2 };
