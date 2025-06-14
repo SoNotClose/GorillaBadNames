@@ -7,7 +7,7 @@ using Photon.Pun;
 /// GORILLA BAD NAMES
 /// 
 /// Github for cloudscript: https://github.com/SoNotClose/GorillaBadNames
-/// .gg/zenunity for more
+/// .gg/zenunity
 /// 
 /// </summary>
 public class GorillaPlayfabUpdater : MonoBehaviour
@@ -22,7 +22,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
 
     private float timer;
 
-    private protected string titleId = "urid";
+    private protected string titleId = "D5696";
 
     private string defaultName = "gorilla";
 
@@ -65,7 +65,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
 
     private void TrackName()
     {
-        currentName = PhotonNetwork.NickName;
+        currentName = PhotonNetwork.LocalPlayer.NickName;
         lastName = currentName;
         CFBN(currentName);
     }
@@ -139,6 +139,8 @@ public class GorillaPlayfabUpdater : MonoBehaviour
                 if (json != null && json.result == 2)
                 {
                     ForceResetDisplayName();
+                    Debug.Log("BANNED BOY");
+                    PhotonNetwork.LocalPlayer.NickName = defaultName;
                 }
                 else
                 {
@@ -179,10 +181,9 @@ public class GorillaPlayfabUpdater : MonoBehaviour
 
         PlayFabClientAPI.UpdateUserTitleDisplayName(resetRequest, result =>
         {
+            PhotonNetwork.LocalPlayer.NickName = defaultName;
             Application.Quit();
-#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#endif
         },
         error => { });
     }
