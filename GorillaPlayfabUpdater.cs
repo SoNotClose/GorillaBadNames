@@ -22,7 +22,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
 
     private float timer;
 
-    private protected string titleId = "D5696";
+    private protected string titleId = "urid";
 
     private string defaultName = "gorilla";
 
