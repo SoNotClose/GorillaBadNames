@@ -1,13 +1,17 @@
 using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using PlayFab;
 using PlayFab.ClientModels;
 using Photon.Pun;
+using GorillaNetworking;
 /// <summary>
 /// 
 /// GORILLA BAD NAMES
 /// 
 /// Github for cloudscript: https://github.com/SoNotClose/GorillaBadNames
-/// .gg/zenunity
+/// .gg/Zen Unity
 /// 
 /// </summary>
 public class GorillaPlayfabUpdater : MonoBehaviour
@@ -22,7 +26,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
 
     private float timer;
 
-    private protected string titleId = "urid"; // deleted other playfab dnt worry
+    private protected string titleId = "urid";
 
     private string defaultName = "gorilla";
 
@@ -65,7 +69,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
 
     private void TrackName()
     {
-        currentName = PhotonNetwork.LocalPlayer.NickName;
+        currentName = PlayerPrefs.GetString("playerName", "gorilla");
         lastName = currentName;
         CFBN(currentName);
     }
@@ -131,16 +135,18 @@ public class GorillaPlayfabUpdater : MonoBehaviour
             GeneratePlayStreamEvent = false
         };
 
-        PlayFabClientAPI.ExecuteCloudScript(request, res =>
+        PlayFabClientAPI.ExecuteCloudScript(request, async res =>
         {
             if (res.FunctionResult != null)
             {
                 var json = JsonUtility.FromJson<BadNameResult>(res.FunctionResult.ToString());
                 if (json != null && json.result == 2)
                 {
-                    ForceResetDisplayName();
-                    Debug.Log("BANNED BOY");
                     PhotonNetwork.LocalPlayer.NickName = defaultName;
+                    GorillaComputer.instance.currentName = defaultName;
+                    GorillaComputer.instance.savedName = defaultName;
+                    GorillaComputer.instance.offlineVRRigNametagText.text = currentName;
+                    StartCoroutine(BadName());
                 }
                 else
                 {
@@ -158,6 +164,16 @@ public class GorillaPlayfabUpdater : MonoBehaviour
         });
     }
 
+    private IEnumerator BadName()
+    {
+        Debug.Log("BANNED BOY KICKING NOW");
+        yield return new WaitForSeconds(1.5f); // give time for the name to update
+        Application.Quit();
+#if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
     private void SyncDisplayName(string name)
     {
         var updateRequest = new UpdateUserTitleDisplayNameRequest
@@ -168,22 +184,6 @@ public class GorillaPlayfabUpdater : MonoBehaviour
         PlayFabClientAPI.UpdateUserTitleDisplayName(updateRequest, result =>
         {
             Debug.Log($"Updated PlayFab display name to: {name}");
-        },
-        error => { });
-    }
-
-    private void ForceResetDisplayName() // i kept forgettng to name this force reset so i struggle for an hour wondering why i kept gettng banned
-    {
-        var resetRequest = new UpdateUserTitleDisplayNameRequest
-        {
-            DisplayName = defaultName
-        };
-
-        PlayFabClientAPI.UpdateUserTitleDisplayName(resetRequest, result =>
-        {
-            PhotonNetwork.LocalPlayer.NickName = defaultName;
-            Application.Quit();
-            UnityEditor.EditorApplication.isPlaying = false;
         },
         error => { });
     }
