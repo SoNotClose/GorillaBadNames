@@ -26,7 +26,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
 
     private float timer;
 
-    private protected string titleId = "urid";
+    private protected string titleId = "URPLAYFABID";
 
     private string defaultName = "gorilla";
 
@@ -142,10 +142,12 @@ public class GorillaPlayfabUpdater : MonoBehaviour
                 var json = JsonUtility.FromJson<BadNameResult>(res.FunctionResult.ToString());
                 if (json != null && json.result == 2)
                 {
+                    PlayerPrefs.SetString("playerName", defaultName); // i forgot to do this and it took me 2 weeks to relize
+                    PlayerPrefs.Save();
                     PhotonNetwork.LocalPlayer.NickName = defaultName;
                     GorillaComputer.instance.currentName = defaultName;
                     GorillaComputer.instance.savedName = defaultName;
-                    GorillaComputer.instance.offlineVRRigNametagText.text = currentName;
+                    GorillaComputer.instance.offlineVRRigNametagText.text = defaultName;
                     StartCoroutine(BadName());
                 }
                 else
@@ -167,7 +169,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
     private IEnumerator BadName()
     {
         Debug.Log("BANNED BOY KICKING NOW");
-        yield return new WaitForSeconds(1.5f); // give time for the name to update
+        yield return new WaitForSeconds(1f); // give time for the name to update
         Application.Quit();
 #if UNITY_EDITOR
     UnityEditor.EditorApplication.isPlaying = false;
