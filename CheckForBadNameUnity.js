@@ -1,5 +1,5 @@
 const BadNames = [
-    "LEMMING",
+    "LEMMING", // u can edit these
     "OWNER"
 // replace with what u want
 ];
