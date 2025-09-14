@@ -9,9 +9,7 @@ using GorillaNetworking;
 /// <summary>
 /// 
 /// GORILLA BAD NAMES
-/// 
-/// Github for cloudscript: https://github.com/SoNotClose/GorillaBadNames
-/// .gg/Zen Unity
+/// by sonotclose
 /// 
 /// </summary>
 public class GorillaPlayfabUpdater : MonoBehaviour
@@ -169,7 +167,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
     private IEnumerator BadName()
     {
         Debug.Log("BANNED BOY KICKING NOW");
-        yield return new WaitForSeconds(1f); // give time for the name to update
+        yield return new WaitForSeconds(1.2597f); // give time for the name to update
         Application.Quit();
 #if UNITY_EDITOR
     UnityEditor.EditorApplication.isPlaying = false;
@@ -202,3 +200,4 @@ public class GorillaPlayfabUpdater : MonoBehaviour
         public string[] badNames;
     }
 }
+
