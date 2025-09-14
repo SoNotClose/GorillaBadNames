@@ -1,4 +1,4 @@
 # GorillaBadNames
 unity version of checkforbadname
 
-broken as of 7/10/25
+fixed as of 9/14/25
