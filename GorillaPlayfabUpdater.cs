@@ -128,7 +128,7 @@ public class GorillaPlayfabUpdater : MonoBehaviour
             {
                 photonName = name,
                 playFabName = name,
-                currentPlayerId = PlayFabClientAPI.IsClientLoggedIn() ? PlayFabSettings.staticPlayer.PlayFabId : null
+                currentPlayerId = PhotonNetwork.LocalPlayer.UserId
             },
             GeneratePlayStreamEvent = false
         };
@@ -200,4 +200,5 @@ public class GorillaPlayfabUpdater : MonoBehaviour
         public string[] badNames;
     }
 }
+
 
